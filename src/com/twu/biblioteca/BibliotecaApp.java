@@ -1,36 +1,76 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    BooksManager booksManager;
-
     public static void main(String[] args) {
-        System.out.println("Hello, world!");
+
+        BooksManager booksManager = new BooksManager("test.txt") ;
+
+        printWelcomeMessage();
+
+        boolean continueProgram = true;
+
+        while (continueProgram)
+        {
+            continueProgram = initiateAction(booksManager);
+        }
     }
 
-    public void initializeBooksManager(String fileListOfBooks) {
-        this.booksManager = new BooksManager(fileListOfBooks);
+
+    private static boolean initiateAction(BooksManager booksManager) {
+
+        printMenu();
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Option number:");
+        String optionSelected = scanner.nextLine();
+
+        boolean continueProgram = true;
+
+        if(optionSelected.equals("5"))
+        {
+            continueProgram = false;
+        }
+        else if(optionSelected.equals("1"))
+        {
+            System.out.println("\nList of available books:\n");
+            printListOfBooks(booksManager.listAvailableBooks());
+
+        }
+        else{
+
+            System.out.println("The option " + optionSelected + " is not valid\n\n");
+        }
+
+        return continueProgram;
     }
 
-    public List<Book> listAvailableBooks() {
-        return this.booksManager.getBooksSatisfyCondition(true);
+    private static void printListOfBooks(List<Book> booksList) {
+
+        for(Book eachBook: booksList)
+        {
+            System.out.println(eachBook.getName());
+        }
+
+        System.out.println();
     }
 
-    public List<Book> listCheckOutBooks() {
-        return this.booksManager.getBooksSatisfyCondition(false);
+    private static void printWelcomeMessage() {
+        System.out.println("\nWelcome to the Bangalore Public Library\n");
     }
 
-    public boolean checkOutBook(String bookName) {
+    private static void printMenu() {
+        System.out.println("Options:\n");
 
-        return this.booksManager.setAvailibityBook(bookName, false);
+        List<Option> menu = Menu.getMenu();
+        for (Option eachOption: menu) {
+            System.out.println(eachOption.getId() + " " + eachOption.getOption());
+        }
+
+        System.out.println();
     }
-
-    public boolean returnBook(String bookName) {
-        return this.booksManager.setAvailibityBook(bookName, true);
-    }
-
 }

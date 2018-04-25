@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -38,5 +39,77 @@ public class BooksManagerTest {
         assertEquals("gabriel piles", second_book.getAuthor());
         assertEquals(2007, second_book.getYear());
         assertEquals(false, second_book.isAvailable());
+    }
+
+    public void listAvailableBooks() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        List<Book> listAvailableBooks = bookManager.listAvailableBooks();
+
+        assertEquals(1, listAvailableBooks.size());
+
+        Book first_book = listAvailableBooks.get(0);
+        // first book--gabriel piles--2009--yes
+        assertEquals("first book", first_book.getName());
+    }
+
+    @Test
+    public void listCheckOutBooks() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        List<Book> listCheckOutBooks = bookManager.listCheckOutBooks();
+
+        assertEquals(1, listCheckOutBooks.size());
+
+        Book second_book = listCheckOutBooks.get(0);
+        assertEquals("second book", second_book.getName());
+    }
+
+    @Test
+    public void checkOutBookFail() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        assertEquals(false, bookManager.checkOutBook(""));
+        assertEquals(false, bookManager.checkOutBook("second book"));
+    }
+
+    @Test
+    public void checkOutBook() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        assertEquals(true, bookManager.checkOutBook("first book"));
+        List<Book> listAvailableBooks = bookManager.listAvailableBooks();
+
+        assertEquals(0, listAvailableBooks.size());
+    }
+
+    @Test
+    public void returnBookFail() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        assertEquals(false, bookManager.returnBook(""));
+        assertEquals(false, bookManager.returnBook("first book"));
+    }
+
+    @Test
+    public void returnBookBook() {
+
+        BooksManager bookManager = initializeBookManager();
+
+        assertEquals(true, bookManager.returnBook("second book"));
+        List<Book> listAvailableBooks = bookManager.listAvailableBooks();
+
+        assertEquals(2, listAvailableBooks.size());
+    }
+
+    private BooksManager initializeBookManager() {
+        BooksManager bookManager = new BooksManager("test.txt");
+
+        return  bookManager;
     }
 }

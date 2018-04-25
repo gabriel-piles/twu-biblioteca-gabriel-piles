@@ -87,4 +87,21 @@ public class BooksManager {
         this.allBooks.get(bookName).setAvailability(availability);
         return true;
     }
+
+    public List<Book> listAvailableBooks() {
+        return getBooksSatisfyCondition(true);
+    }
+
+    public List<Book> listCheckOutBooks() {
+        return getBooksSatisfyCondition(false);
+    }
+
+    public boolean checkOutBook(String bookName) {
+
+        return setAvailibityBook(bookName, false);
+    }
+
+    public boolean returnBook(String bookName) {
+        return setAvailibityBook(bookName, true);
+    }
 }
