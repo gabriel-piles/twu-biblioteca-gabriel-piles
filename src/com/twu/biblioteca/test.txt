@@ -1,3 +1,0 @@
-Name    Author  Year    checked-out
-first book  gabriel piles   2009    yes
-second book gabriel piles   2007    no

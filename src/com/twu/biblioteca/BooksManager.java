@@ -1,44 +1,42 @@
 package com.twu.biblioteca;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BooksManager {
 
-    String file_name;
-    List<Book> all_books;
+    String fileName;
+    Map<String, Book> allBooks;
 
-    public BooksManager(String file_name) {
-        this.file_name = file_name;
-        all_books = initialize_list_all_books(file_name);
+    public BooksManager(String fileName) {
+        this.fileName = fileName;
+        allBooks = initializeAllBooksList(fileName);
     }
 
-    private List<Book> initialize_list_all_books(String file_name) {
-        List<String> file_content = open_file(file_name);
+    private Map<String, Book> initializeAllBooksList(String file_name) {
+        List<String> file_content = readFileListBooks(file_name);
 
-        List<Book> books_in_file = new ArrayList<Book>();
+        Map<String, Book> booksInFile = new HashMap();
 
         for (String each_line: file_content)
         {
             String[] fields = each_line.split("--");
 
-            if (fields.length <= 3 || fields[0].equals("Name"))
+            if (fields.length <= 3 || fields[0].equals("Name") || booksInFile.containsKey(fields[0]))
             {
                 continue;
             }
 
             boolean available = fields[3].equals("yes");
 
-            Book new_book = new Book(fields[0], fields[1], Integer.parseInt(fields[2]), available);
-            books_in_file.add(new_book);
+            Book newBook = new Book(fields[0], fields[1], Integer.parseInt(fields[2]), available);
+            booksInFile.put(fields[0], newBook);
         }
 
-        return books_in_file;
+        return booksInFile;
     }
 
-    private List<String> open_file(String file_name) {
+    private List<String> readFileListBooks(String file_name) {
 
         List<String> lines = new ArrayList<String>();
 
@@ -52,16 +50,41 @@ public class BooksManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         return lines;
     }
 
-    public List<Book> get_list_of_books() {
-        List<String> books_names = new ArrayList<String>();
+    public Map<String, Book> getAllBooks() {
+        return allBooks;
+    }
 
-        for (Book each_book:all_books) {
-            books_names.add(each_book.getName());
+    public List<Book> getBooksSatisfyCondition(boolean hasToBeAvailable) {
+        List<Book> booksSatisfyCondition = new ArrayList<Book>();
+
+        for (Map.Entry<String, Book> eachBook : this.allBooks.entrySet()) {
+
+            if (eachBook.getValue().isAvailable() == hasToBeAvailable)
+            {
+                booksSatisfyCondition.add(eachBook.getValue());
+            }
         }
 
-        return all_books;
+        return booksSatisfyCondition;
+    }
+
+    public boolean setAvailibityBook(String bookName, boolean availability) {
+
+        if(!this.allBooks.containsKey(bookName))
+        {
+            return false;
+        }
+
+        if (this.allBooks.get(bookName).isAvailable() == availability)
+        {
+            return false;
+        }
+
+        this.allBooks.get(bookName).setAvailability(availability);
+        return true;
     }
 }

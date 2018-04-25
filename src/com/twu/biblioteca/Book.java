@@ -20,8 +20,12 @@ public class Book {
         return year;
     }
 
-    public boolean getAvailability(){
+    public boolean isAvailable(){
         return available;
+    }
+
+    public void setAvailability(boolean available) {
+        this.available = available;
     }
 
     public Book(String name, String author, int year, boolean available) {
