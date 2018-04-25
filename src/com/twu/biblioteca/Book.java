@@ -1,6 +1,33 @@
 package com.twu.biblioteca;
 
 public class Book {
-    public Book(String name, String author, int year_published) {
+
+    private String name;
+    private String author;
+    private int year;
+    private boolean available;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public boolean getAvailability(){
+        return available;
+    }
+
+    public Book(String name, String author, int year, boolean available) {
+        this.name = name;
+        this.author = author;
+        this.year = year;
+        this.available = available;
     }
 }
