@@ -37,7 +37,7 @@ public class BibliotecaApp {
 
         if (!menu.containsKey(optionSelected))
         {
-            System.out.println("\nThe option " + optionSelected + " is not valid\n\n");
+            System.out.println("\nThe option " + optionSelected + " is not valid!\n\n");
         }
         else if(menu.get(optionSelected).equals("List Books"))
         {
@@ -65,11 +65,11 @@ public class BibliotecaApp {
     }
 
     private static void returnBook(BooksManager booksManager) {
-        String bookName = getUserInput("Write the book name to return:");
+        String bookName = getUserInput("Write the book's name to return:");
 
         if(booksManager.returnBook(bookName))
         {
-            System.out.println("\nThe book " + bookName + " successfully returned\n");
+            System.out.println("\nThe book " + bookName + " was successfully returned\n");
         }
         else{
             System.out.println("\nThe book " + bookName + " does not exist in the library\n");
@@ -78,11 +78,11 @@ public class BibliotecaApp {
 
     private static void checkOutBook(BooksManager booksManager) {
 
-        String bookName = getUserInput("Write the book name to check out:");
+        String bookName = getUserInput("Write the book's name to check out:");
 
         if(booksManager.checkOutBook(bookName))
         {
-            System.out.println("\nThe book " + bookName + " successfully checked out\n");
+            System.out.println("\nThe book " + bookName + " was successfully checked out\n");
         }
         else{
             System.out.println("\nThe book " + bookName + " does not exist in the library\n");
@@ -91,7 +91,7 @@ public class BibliotecaApp {
 
     private static void checkBookDetails(Map<String, Book> booksList) {
 
-        String bookName = getUserInput("Write the book name to get the details:");
+        String bookName = getUserInput("Write the book's name to get the details:");
 
         if(booksList.containsKey(bookName))
         {

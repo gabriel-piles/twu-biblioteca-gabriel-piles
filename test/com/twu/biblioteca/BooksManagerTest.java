@@ -41,9 +41,10 @@ public class BooksManagerTest {
         assertEquals(false, second_book.isAvailable());
     }
 
+    @Test
     public void listAvailableBooks() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         List<Book> listAvailableBooks = bookManager.listAvailableBooks();
 
@@ -57,7 +58,7 @@ public class BooksManagerTest {
     @Test
     public void listCheckOutBooks() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         List<Book> listCheckOutBooks = bookManager.listCheckOutBooks();
 
@@ -70,7 +71,7 @@ public class BooksManagerTest {
     @Test
     public void checkOutBookFail() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         assertEquals(false, bookManager.checkOutBook(""));
         assertEquals(false, bookManager.checkOutBook("second book"));
@@ -79,7 +80,7 @@ public class BooksManagerTest {
     @Test
     public void checkOutBook() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         assertEquals(true, bookManager.checkOutBook("first book"));
         List<Book> listAvailableBooks = bookManager.listAvailableBooks();
@@ -90,7 +91,7 @@ public class BooksManagerTest {
     @Test
     public void returnBookFail() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         assertEquals(false, bookManager.returnBook(""));
         assertEquals(false, bookManager.returnBook("first book"));
@@ -99,7 +100,7 @@ public class BooksManagerTest {
     @Test
     public void returnBookBook() {
 
-        BooksManager bookManager = initializeBookManager();
+        BooksManager bookManager = initializeBookManagerForTesting();
 
         assertEquals(true, bookManager.returnBook("second book"));
         List<Book> listAvailableBooks = bookManager.listAvailableBooks();
@@ -107,9 +108,8 @@ public class BooksManagerTest {
         assertEquals(2, listAvailableBooks.size());
     }
 
-    private BooksManager initializeBookManager() {
+    private BooksManager initializeBookManagerForTesting() {
         BooksManager bookManager = new BooksManager("test.txt");
-
         return  bookManager;
     }
 }

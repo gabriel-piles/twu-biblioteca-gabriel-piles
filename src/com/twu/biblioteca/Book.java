@@ -24,8 +24,16 @@ public class Book {
         return available;
     }
 
-    public void setAvailability(boolean available) {
-        this.available = available;
+    public boolean setAvailability(boolean availabilityToSet) {
+
+        if (available == availabilityToSet)
+        {
+            return false;
+        }
+
+        this.available = availabilityToSet;
+
+        return true;
     }
 
     public Book(String name, String author, int year, boolean available) {
