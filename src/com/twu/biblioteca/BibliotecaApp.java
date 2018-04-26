@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -29,7 +30,14 @@ public class BibliotecaApp {
         System.out.println("Option number:");
         String optionSelected = scanner.nextLine();
 
+
         boolean continueProgram = true;
+
+        if (!stringIsAInteger(optionSelected))
+        {
+            return continueProgram;
+        }
+
 
         if(optionSelected.equals("5"))
         {
@@ -66,11 +74,27 @@ public class BibliotecaApp {
     private static void printMenu() {
         System.out.println("Options:\n");
 
-        List<Option> menu = Menu.getMenu();
-        for (Option eachOption: menu) {
-            System.out.println(eachOption.getId() + " " + eachOption.getOption());
+        Map<Integer, String> menu = Menu.getMenu();
+
+        for (Map.Entry<Integer, String> eachOptionMenu : menu.entrySet()) {
+
+            System.out.println(eachOptionMenu.getKey() + " " + eachOptionMenu.getValue());
+
         }
 
         System.out.println();
+    }
+
+    public static boolean stringIsAInteger(String objectiveString) {
+        try
+        {
+            Integer.parseInt(objectiveString);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
