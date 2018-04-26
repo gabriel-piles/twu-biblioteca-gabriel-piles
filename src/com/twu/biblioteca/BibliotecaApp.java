@@ -19,15 +19,14 @@ public class BibliotecaApp {
         while (continueProgram)
         {
             printMenu(menu);
-            String optionSelected = getSelectedOption();
+            String optionSelected = getUserInput("Option number:");
             continueProgram = initiateAction(booksManager, menu, optionSelected);
         }
     }
 
-    private static String getSelectedOption() {
+    private static String getUserInput(String message) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Option number:");
+        System.out.println(message);
         return scanner.nextLine();
     }
 
@@ -38,12 +37,23 @@ public class BibliotecaApp {
 
         if (!menu.containsKey(optionSelected))
         {
-            System.out.println("The option " + optionSelected + " is not valid\n\n");
+            System.out.println("\nThe option " + optionSelected + " is not valid\n\n");
         }
         else if(menu.get(optionSelected).equals("List Books"))
         {
-            System.out.println("\nList of available books:\n");
             printListOfBooks(booksManager.listAvailableBooks());
+        }
+        else if(menu.get(optionSelected).equals("Book Details"))
+        {
+            checkBookDetails(booksManager.getAllBooks());
+        }
+        else if(menu.get(optionSelected).equals("Checkout Book"))
+        {
+            checkOutBook(booksManager);
+        }
+        else if(menu.get(optionSelected).equals("Return Book"))
+        {
+            returnBook(booksManager);
         }
         else if(menu.get(optionSelected).equals("Quit"))
         {
@@ -54,11 +64,51 @@ public class BibliotecaApp {
         return continueProgram;
     }
 
+    private static void returnBook(BooksManager booksManager) {
+        String bookName = getUserInput("Write the book name to return:");
+
+        if(booksManager.returnBook(bookName))
+        {
+            System.out.println("\nThe book " + bookName + " successfully returned\n");
+        }
+        else{
+            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
+        }
+    }
+
+    private static void checkOutBook(BooksManager booksManager) {
+
+        String bookName = getUserInput("Write the book name to check out:");
+
+        if(booksManager.checkOutBook(bookName))
+        {
+            System.out.println("\nThe book " + bookName + " successfully checked out\n");
+        }
+        else{
+            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
+        }
+    }
+
+    private static void checkBookDetails(Map<String, Book> booksList) {
+
+        String bookName = getUserInput("Write the book name to get the details:");
+
+        if(booksList.containsKey(bookName))
+        {
+            booksList.get(bookName).printBookDetails();
+        }
+        else{
+            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
+        }
+    }
+
     private static void printListOfBooks(List<Book> booksList) {
+
+        System.out.println("\nList of available books:\n");
 
         for(Book eachBook: booksList)
         {
-            System.out.println(eachBook.getName());
+            System.out.println("- " + eachBook.getName());
         }
 
         System.out.println();
@@ -74,7 +124,6 @@ public class BibliotecaApp {
         for (Map.Entry<String, String> eachOptionMenu : menu.entrySet()) {
 
             System.out.println(eachOptionMenu.getKey() + " " + eachOptionMenu.getValue());
-
         }
 
         System.out.println();

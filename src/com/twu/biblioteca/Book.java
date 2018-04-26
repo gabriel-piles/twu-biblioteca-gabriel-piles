@@ -34,4 +34,19 @@ public class Book {
         this.year = year;
         this.available = available;
     }
+
+    public void printBookDetails() {
+        System.out.println("\nName: " + name);
+        System.out.println("Author: " + author);
+        System.out.println("Year: " + year);
+
+        if(available)
+        {
+            System.out.println("Available: yes");
+        }
+        else {
+            System.out.println("Available: no");
+        }
+        System.out.println();
+    }
 }
