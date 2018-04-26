@@ -13,14 +13,14 @@ public class MenuTest {
 
     @Test
     public void getOptions() {
-        Map<Integer, String> menu = Menu.getMenu();
+        Map<String, String> menu = Menu.getMenu();
 
         assertNotEquals(null, menu);
 
-        assertEquals("List Books", menu.get(1));
-        assertEquals("Book Details", menu.get(2));
-        assertEquals("Checkout Book", menu.get(3));
-        assertEquals("Return Book", menu.get(4));
-        assertEquals("Quit", menu.get(5));
+        assertEquals("List Books", menu.get("1"));
+        assertEquals("Book Details", menu.get("2"));
+        assertEquals("Checkout Book", menu.get("3"));
+        assertEquals("Return Book", menu.get("4"));
+        assertEquals("Quit", menu.get("5"));
     }
 }
