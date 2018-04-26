@@ -14,44 +14,41 @@ public class BibliotecaApp {
 
         boolean continueProgram = true;
 
+        Map<String, String> menu = Menu.getMenu();
+
         while (continueProgram)
         {
-            continueProgram = initiateAction(booksManager);
+            printMenu(menu);
+            String optionSelected = getSelectedOption();
+            continueProgram = initiateAction(booksManager, menu, optionSelected);
         }
     }
 
-
-    private static boolean initiateAction(BooksManager booksManager) {
-
-        printMenu();
-
+    private static String getSelectedOption() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Option number:");
-        String optionSelected = scanner.nextLine();
+        return scanner.nextLine();
+    }
 
+
+    private static boolean initiateAction(BooksManager booksManager, Map<String, String> menu, String optionSelected) {
 
         boolean continueProgram = true;
 
-        if (!stringIsAInteger(optionSelected))
+        if (!menu.containsKey(optionSelected))
         {
-            return continueProgram;
+            System.out.println("The option " + optionSelected + " is not valid\n\n");
         }
-
-
-        if(optionSelected.equals("5"))
-        {
-            continueProgram = false;
-        }
-        else if(optionSelected.equals("1"))
+        else if(menu.get(optionSelected).equals("List Books"))
         {
             System.out.println("\nList of available books:\n");
             printListOfBooks(booksManager.listAvailableBooks());
-
         }
-        else{
-
-            System.out.println("The option " + optionSelected + " is not valid\n\n");
+        else if(menu.get(optionSelected).equals("Quit"))
+        {
+            System.out.println("\nGood Bye\n");
+            continueProgram = false;
         }
 
         return continueProgram;
@@ -71,30 +68,15 @@ public class BibliotecaApp {
         System.out.println("\nWelcome to the Bangalore Public Library\n");
     }
 
-    private static void printMenu() {
+    private static void printMenu(Map<String, String> menu) {
         System.out.println("Options:\n");
 
-        Map<Integer, String> menu = Menu.getMenu();
-
-        for (Map.Entry<Integer, String> eachOptionMenu : menu.entrySet()) {
+        for (Map.Entry<String, String> eachOptionMenu : menu.entrySet()) {
 
             System.out.println(eachOptionMenu.getKey() + " " + eachOptionMenu.getValue());
 
         }
 
         System.out.println();
-    }
-
-    public static boolean stringIsAInteger(String objectiveString) {
-        try
-        {
-            Integer.parseInt(objectiveString);
-        }
-        catch(NumberFormatException nfe)
-        {
-            return false;
-        }
-
-        return true;
     }
 }
