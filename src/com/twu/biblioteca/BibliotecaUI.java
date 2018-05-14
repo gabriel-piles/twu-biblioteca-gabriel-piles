@@ -1,13 +1,38 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.actions.CheckOutBookCommand;
+import com.twu.biblioteca.actions.Command;
+import com.twu.biblioteca.actions.ListAvailableBooksCommand;
+
 import java.util.*;
 
 public class BibliotecaUI {
 
     private BooksManager booksManager;
+    private Map<Integer, Command> commandMap;
+
 
     public BibliotecaUI(BooksManager booksManager) {
         this.booksManager = booksManager;
+        this.commandMap = new HashMap();
+        this.commandMap.put(0, new CheckOutBookCommand());
+        this.commandMap.put(1, new ListAvailableBooksCommand());
+    }
+
+    public void initializeUI() {
+        boolean continueProgram = true;
+
+        while (continueProgram)
+        {
+            printMenu();
+            String optionSelected = getUserInput("Option number:");
+            continueProgram = initiateAction(optionSelected);
+        }
+    }
+
+    public String testCommands(int actionNumber){
+        Command command = commandMap.get(actionNumber);
+        return command.execute(this.booksManager);
     }
 
     private static String getUserInput(String message) {
@@ -15,10 +40,17 @@ public class BibliotecaUI {
         System.out.println(message);
         return scanner.nextLine();
     }
+
+    public static void printMenu(){
+        Map<String, String> menu = Menu.getMenu();
+        printDictionary(menu);
+    }
     
-    private boolean initiateAction(BooksManager booksManager, Map<String, String> menu, String optionSelected) {
+    private boolean initiateAction(String optionSelected) {
 
         boolean continueProgram = true;
+
+        Map<String, String> menu = Menu.getMenu();
 
         if (!menu.containsKey(optionSelected))
         {

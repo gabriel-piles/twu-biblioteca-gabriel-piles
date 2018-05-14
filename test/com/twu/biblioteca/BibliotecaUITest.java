@@ -21,6 +21,18 @@ public class BibliotecaUITest {
     }
 
     @Test
+    public void printMenu() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI.printMenu();
+
+        assertThat(outputStream.toString(), CoreMatchers.containsString("1 List Books"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("2 Book Details"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("3 Checkout Book"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("4 Return Book"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("5 Quit"));
+    }
+
+    @Test
     public void printAvailableBooks() {
         OutputStream outputStream = prepareRedirectOutputForTests();
         BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
@@ -29,7 +41,6 @@ public class BibliotecaUITest {
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("first book"));
     }
-
 
     @Test
     public void printResultCheckOutBookCorrect() {
@@ -128,6 +139,16 @@ public class BibliotecaUITest {
         bibliotecaUI.printBookDetails("third book");
 
         assertEquals("The book third book does not exist in the library", outputStream.toString().trim());
+
+    }
+
+    @Test
+    public void testCommands() {
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+
+        assertEquals("check", bibliotecaUI.testCommands(0));
+        assertEquals("list", bibliotecaUI.testCommands(1));
 
     }
 
