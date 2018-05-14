@@ -1,21 +1,33 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.actions.Action;
+import com.twu.biblioteca.actions.CheckOutBookAction;
+import com.twu.biblioteca.actions.ListAvailableBooksAction;
+import com.twu.biblioteca.actions.QuitAction;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Menu {
 
-    public static Map<String, String> getMenu(){
-        Map<String, String> menu_options = new HashMap();
+    public static Map<Integer, Action> getMenu(){
 
-        menu_options.put("1", "List Books");
-        menu_options.put("2", "Book Details");
-        menu_options.put("3", "Checkout Book");
-        menu_options.put("4", "Return Book");
-        menu_options.put("5", "Quit");
+        Map<Integer, Action> actionsMap;
 
-        return menu_options;
+        actionsMap = new HashMap();
+
+        actionsMap.put(1, new ListAvailableBooksAction());
+        actionsMap.put(2, new ListAvailableBooksAction());
+        actionsMap.put(3, new ListAvailableBooksAction());
+        actionsMap.put(4, new ListAvailableBooksAction());
+        actionsMap.put(5, new QuitAction());
+
+        return actionsMap;
     }
 
+    public static String createMenuEntryString(Integer actionId, Action someAction)
+    {
+        return actionId + ' ' + someAction.getName();
+    }
 }

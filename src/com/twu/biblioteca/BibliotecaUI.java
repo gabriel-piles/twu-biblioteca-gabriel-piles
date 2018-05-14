@@ -1,22 +1,17 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.actions.CheckOutBookCommand;
-import com.twu.biblioteca.actions.Command;
-import com.twu.biblioteca.actions.ListAvailableBooksCommand;
+import com.twu.biblioteca.actions.CheckOutBookAction;
+import com.twu.biblioteca.actions.Action;
+import com.twu.biblioteca.actions.ListAvailableBooksAction;
 
 import java.util.*;
 
 public class BibliotecaUI {
 
     private BooksManager booksManager;
-    private Map<Integer, Command> commandMap;
-
 
     public BibliotecaUI(BooksManager booksManager) {
         this.booksManager = booksManager;
-        this.commandMap = new HashMap();
-        this.commandMap.put(0, new CheckOutBookCommand());
-        this.commandMap.put(1, new ListAvailableBooksCommand());
     }
 
     public void initializeUI() {
@@ -31,8 +26,8 @@ public class BibliotecaUI {
     }
 
     public String testCommands(int actionNumber){
-        Command command = commandMap.get(actionNumber);
-        return command.execute(this.booksManager);
+        Action action = commandMap.get(actionNumber);
+        return action.execute(this.booksManager);
     }
 
     private static String getUserInput(String message) {
