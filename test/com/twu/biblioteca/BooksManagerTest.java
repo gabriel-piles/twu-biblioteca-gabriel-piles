@@ -35,10 +35,42 @@ public class BooksManagerTest {
         Map<String, Book> listOfBooks = booksManager.getAllBooks();
         Book second_book = listOfBooks.get("second book");
         // second book--gabriel piles--2007--no
+
+    }
+
+    @Test
+    public void getBookFirstBook() {
+        BooksManager booksManager = new BooksManager("test.txt");
+        Book first_book = booksManager.getBook("first book");
+
+        assertEquals("first book", first_book.getName());
+        assertEquals("gabriel piles", first_book.getAuthor());
+        assertEquals(2009, first_book.getYear());
+        assertEquals(true, first_book.isAvailable());
+    }
+
+    @Test
+    public void getBookSecondBook() {
+        BooksManager booksManager = new BooksManager("test.txt");
+        Book second_book = booksManager.getBook("second book");
+
         assertEquals("second book", second_book.getName());
         assertEquals("gabriel piles", second_book.getAuthor());
         assertEquals(2007, second_book.getYear());
         assertEquals(false, second_book.isAvailable());
+    }
+
+    @Test
+    public void existBook() {
+        BooksManager booksManager = new BooksManager("test.txt");
+        boolean exist = booksManager.existBook("first book");
+        assertEquals(true, exist);
+
+        exist = booksManager.existBook("second book");
+        assertEquals(true, exist);
+
+        exist = booksManager.existBook("third book");
+        assertEquals(false, exist);
     }
 
     @Test

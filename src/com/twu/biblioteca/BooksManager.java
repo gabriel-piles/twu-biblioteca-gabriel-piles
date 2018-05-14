@@ -54,12 +54,31 @@ public class BooksManager {
 
     public boolean setAvailabilityToBook(String bookName, boolean availability) {
 
-        if(!this.allBooks.containsKey(bookName))
+        if(!existBook(bookName))
         {
             return false;
         }
 
         return this.allBooks.get(bookName).setAvailability(availability);
+    }
+
+    public Boolean existBook(String bookName){
+        if(!this.allBooks.containsKey(bookName))
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public Book getBook(String bookName){
+
+        if(!existBook(bookName)){
+            return null;
+        }
+
+        return this.allBooks.get(bookName);
     }
 
     public List<Book> listAvailableBooks() {
