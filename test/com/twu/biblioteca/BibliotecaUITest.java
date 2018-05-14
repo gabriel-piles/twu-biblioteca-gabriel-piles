@@ -1,15 +1,15 @@
 package com.twu.biblioteca;
 
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class BibliotecaUITest {
 
@@ -21,17 +21,15 @@ public class BibliotecaUITest {
     }
 
     @Test
-    public void printDictionary() {
-
-        Map<String, String> genericDictionary = new HashMap();
-
-        genericDictionary.put("1", "a");
-        genericDictionary.put("2", "b");
-
+    public void printAvailableBooks() {
         OutputStream outputStream = prepareRedirectOutputForTests();
-        BibliotecaUI.printDictionary(genericDictionary);
-        assertEquals("1 a\n2 b", outputStream.toString().trim());
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printAvailableBooks();
+
+        assertThat(outputStream.toString(), CoreMatchers.containsString("first book"));
     }
+
 
     @Test
     public void printResultCheckOutBookCorrect() {
@@ -53,6 +51,7 @@ public class BibliotecaUITest {
         assertEquals("The book third book does not exist in the library", outputStream.toString().trim());
     }
 
+
     @Test
     public void printResultCheckOutBookAlreadyCheckedOut() {
         OutputStream outputStream = prepareRedirectOutputForTests();
@@ -61,6 +60,75 @@ public class BibliotecaUITest {
         bibliotecaUI.printResultCheckOutBook("second book");
 
         assertEquals("The book second book is already checked out", outputStream.toString().trim());
+        System.out.println("Something");
+    }
+
+    @Test
+    public void printResultReturnBookCorrect() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printResultReturnBook("second book");
+
+        assertEquals("The book second book was successfully returned", outputStream.toString().trim());
+    }
+
+    @Test
+    public void printResultReturnBookInLibrary() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printResultReturnBook("first book");
+
+        assertEquals("The book first book is not checked out", outputStream.toString().trim());
+    }
+
+    @Test
+    public void printResultReturnBookFail() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printResultReturnBook("third book");
+
+        assertEquals("The book third book does not exist in the library", outputStream.toString().trim());
+    }
+
+    @Test
+    public void printBookDetailsFirstBook() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printBookDetails("first book");
+
+        assertThat(outputStream.toString(), CoreMatchers.containsString("first book"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("gabriel piles"));
+        assertThat(outputStream.toString().trim(), CoreMatchers.containsString("2009"));
+        assertThat(outputStream.toString().trim(), CoreMatchers.containsString("yes"));
+    }
+
+    @Test
+    public void printBookDetailsSecondBook() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printBookDetails("second book");
+
+        assertThat(outputStream.toString(), CoreMatchers.containsString("second book"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("gabriel piles"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("2007"));
+        assertThat(outputStream.toString(), CoreMatchers.containsString("no"));
+
+    }
+
+    @Test
+    public void printBookDetailsNonExistentBook() {
+        OutputStream outputStream = prepareRedirectOutputForTests();
+        BibliotecaUI bibliotecaUI = initializeBibliotecaUI();
+
+        bibliotecaUI.printBookDetails("third book");
+
+        assertEquals("The book third book does not exist in the library", outputStream.toString().trim());
+
     }
 
     private OutputStream prepareRedirectOutputForTests(){

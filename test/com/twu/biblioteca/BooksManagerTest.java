@@ -39,6 +39,19 @@ public class BooksManagerTest {
     }
 
     @Test
+    public void existBook() {
+        BooksManager booksManager = new BooksManager("test.txt");
+        boolean exist = booksManager.existBook("first book");
+        assertEquals(true, exist);
+
+        exist = booksManager.existBook("second book");
+        assertEquals(true, exist);
+
+        exist = booksManager.existBook("third book");
+        assertEquals(false, exist);
+    }
+
+    @Test
     public void getBookFirstBook() {
         BooksManager booksManager = new BooksManager("test.txt");
         Book first_book = booksManager.getBook("first book");
@@ -58,19 +71,6 @@ public class BooksManagerTest {
         assertEquals("gabriel piles", second_book.getAuthor());
         assertEquals(2007, second_book.getYear());
         assertEquals(false, second_book.isAvailable());
-    }
-
-    @Test
-    public void existBook() {
-        BooksManager booksManager = new BooksManager("test.txt");
-        boolean exist = booksManager.existBook("first book");
-        assertEquals(true, exist);
-
-        exist = booksManager.existBook("second book");
-        assertEquals(true, exist);
-
-        exist = booksManager.existBook("third book");
-        assertEquals(false, exist);
     }
 
     @Test

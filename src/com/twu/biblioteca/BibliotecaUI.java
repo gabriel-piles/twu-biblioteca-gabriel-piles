@@ -16,7 +16,7 @@ public class BibliotecaUI {
         return scanner.nextLine();
     }
     
-    private static boolean initiateAction(BooksManager booksManager, Map<String, String> menu, String optionSelected) {
+    private boolean initiateAction(BooksManager booksManager, Map<String, String> menu, String optionSelected) {
 
         boolean continueProgram = true;
 
@@ -26,11 +26,11 @@ public class BibliotecaUI {
         }
         else if(menu.get(optionSelected).equals("List Books"))
         {
-            printListOfBooks(booksManager.listAvailableBooks());
+            printAvailableBooks();
         }
         else if(menu.get(optionSelected).equals("Book Details"))
         {
-            checkBookDetails(booksManager.getAllBooks());
+            //checkBookDetails(booksManager.getAllBooks());
         }
         else if(menu.get(optionSelected).equals("Checkout Book"))
         {
@@ -38,7 +38,7 @@ public class BibliotecaUI {
         }
         else if(menu.get(optionSelected).equals("Return Book"))
         {
-            returnBook(booksManager);
+            //returnBook(booksManager);
         }
         else if(menu.get(optionSelected).equals("Quit"))
         {
@@ -49,32 +49,22 @@ public class BibliotecaUI {
         return continueProgram;
     }
 
-    private static void returnBook(BooksManager booksManager) {
-        String bookName = getUserInput("Write the book's name to return:");
+    public void printBookDetails(String bookName) {
 
-        if(booksManager.returnBook(bookName))
+        if(!this.booksManager.existBook(bookName))
         {
-            System.out.println("\nThe book " + bookName + " was successfully returned\n");
-        }
-        else{
             System.out.println("\nThe book " + bookName + " does not exist in the library\n");
+            return;
         }
+
+        Book objectiveBook = this.booksManager.getBook(bookName);
+
+        objectiveBook.printBookDetails();
     }
 
-    private static void checkBookDetails(Map<String, Book> booksList) {
+    public void printAvailableBooks() {
 
-        String bookName = getUserInput("Write the book's name to get the details:");
-
-        if(booksList.containsKey(bookName))
-        {
-            booksList.get(bookName).printBookDetails();
-        }
-        else{
-            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
-        }
-    }
-
-    private static void printListOfBooks(List<Book> booksList) {
+        List<Book> booksList = this.booksManager.getBooksThatSatisfyCondition(true);
 
         System.out.println("\nList of available books:\n");
 
@@ -90,7 +80,7 @@ public class BibliotecaUI {
         System.out.println("\nWelcome to the Bangalore Public Library\n");
     }
 
-    public static void printDictionary(Map<String, String> genericDictionary) {
+    private static void printDictionary(Map<String, String> genericDictionary) {
 
         for (Map.Entry<String, String> eachOptionMenu : genericDictionary.entrySet()) {
 
@@ -100,23 +90,52 @@ public class BibliotecaUI {
         System.out.println();
     }
     
-    public void printResultCheckOutBook(String nameBookCheckOut){
+    public void printResultCheckOutBook(String bookName){
 
-        if(!this.booksManager.existBook(nameBookCheckOut))
+        if(!existBook(bookName))
         {
-            System.out.println("\nThe book " + nameBookCheckOut + " does not exist in the library\n");
             return;
         }
 
-        Book objectiveBook = this.booksManager.getBook(nameBookCheckOut);
+        Book objectiveBook = this.booksManager.getBook(bookName);
 
         if(!objectiveBook.isAvailable())
         {
-            System.out.println("\nThe book " + nameBookCheckOut + " is already checked out\n");
+            System.out.println("\nThe book " + bookName + " is already checked out\n");
         }
         else {
-            this.booksManager.checkOutBook(nameBookCheckOut);
-            System.out.println("\nThe book " + nameBookCheckOut + " was successfully checked out\n");
+            this.booksManager.checkOutBook(bookName);
+            System.out.println("\nThe book " + bookName + " was successfully checked out\n");
         }
+    }
+
+    public void printResultReturnBook(String bookName) {
+        if(!existBook(bookName))
+        {
+            return;
+        }
+
+        Book objectiveBook = this.booksManager.getBook(bookName);
+
+        if(objectiveBook.isAvailable())
+        {
+            System.out.println("\nThe book " + bookName + " is not checked out\n");
+        }
+        else {
+            this.booksManager.returnBook(bookName);
+            System.out.println("\nThe book " + bookName + " was successfully returned\n");
+        }
+    }
+
+    private boolean existBook(String bookName){
+
+        boolean bookExistence = true;
+        if(!this.booksManager.existBook(bookName))
+        {
+            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
+            bookExistence = false;
+        }
+
+        return bookExistence;
     }
 }
