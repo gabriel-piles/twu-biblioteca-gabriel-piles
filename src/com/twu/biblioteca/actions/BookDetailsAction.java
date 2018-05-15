@@ -4,39 +4,36 @@ import com.twu.biblioteca.BibliotecaUI;
 import com.twu.biblioteca.Book;
 import com.twu.biblioteca.BooksManager;
 
-public class CheckOutBookAction implements Action {
+public class BookDetailsAction implements Action {
 
     private BooksManager booksManager;
 
     @Override
     public String getName() {
-        return "Checkout Book";
+        return "Book Details";
     }
 
     @Override
     public void execute(BooksManager booksManager) {
         initializeBooksManager(booksManager);
         String userInput = BibliotecaUI.getUserInput("Enter the book name:");
-        checkOutBook(userInput);
+        printBookDetails(userInput);
     }
 
     public void initializeBooksManager(BooksManager booksManager) {
         this.booksManager = booksManager;
     }
 
-    public void checkOutBook(String bookName) {
-        if (!this.booksManager.existBook(bookName)) {
-            BibliotecaUI.informAboutTheBookNonEsxistence(bookName);
+    public void printBookDetails(String bookName) {
+
+        if(!this.booksManager.existBook(bookName))
+        {
+            System.out.println("\nThe book " + bookName + " does not exist in the library\n");
             return;
         }
 
         Book objectiveBook = this.booksManager.getBook(bookName);
 
-        if (!objectiveBook.isAvailable()) {
-            System.out.println("\nThe book " + bookName + " is already checked out\n");
-        } else {
-            this.booksManager.checkOutBook(bookName);
-            System.out.println("\nThe book " + bookName + " was successfully checked out\n");
-        }
+        objectiveBook.printBookDetails();
     }
 }

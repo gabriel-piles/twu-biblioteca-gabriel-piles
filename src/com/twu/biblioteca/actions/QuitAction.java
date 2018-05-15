@@ -5,18 +5,13 @@ import com.twu.biblioteca.BooksManager;
 public class QuitAction implements Action {
 
     @Override
-    public String getId() {
-        return "6";
-    }
-
-    @Override
     public String getName() {
-        return "Exit";
+        return "Quit";
     }
 
     @Override
-    public String execute(BooksManager booksManager)
+    public void execute(BooksManager booksManager)
     {
-        return null;
+        System.out.println("\nGood Bye\n");
     }
 }

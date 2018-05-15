@@ -4,5 +4,5 @@ import com.twu.biblioteca.BooksManager;
 
 public interface Action {
     public String getName();
-    public String execute(BooksManager booksManager);
+    public void execute(BooksManager booksManager);
 }
