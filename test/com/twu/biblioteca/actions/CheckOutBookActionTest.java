@@ -26,7 +26,7 @@ public class CheckOutBookActionTest {
 
         checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
 
-        checkOutBookAction.checkOutBook("first book");
+        checkOutBookAction.checkOutBook("first book", TestHelpers.getUserTest());
 
         assertEquals("The book first book was successfully checked out", outputStream.toString().trim());
     }
@@ -38,7 +38,7 @@ public class CheckOutBookActionTest {
 
         checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
 
-        checkOutBookAction.checkOutBook("third book");
+        checkOutBookAction.checkOutBook("third book", TestHelpers.getUserTest());
 
         assertEquals("The book third book does not exist in the library", outputStream.toString().trim());
     }
@@ -51,7 +51,7 @@ public class CheckOutBookActionTest {
 
         checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
 
-        checkOutBookAction.checkOutBook("second book");
+        checkOutBookAction.checkOutBook("second book", TestHelpers.getUserTest());
 
         assertEquals("The book second book is already checked out", outputStream.toString().trim());
         System.out.println("Something");
@@ -64,7 +64,7 @@ public class CheckOutBookActionTest {
 
         TestHelpers.userInput("first book");
 
-        checkOutBookAction.execute(new BooksManager("test.txt"));
+        checkOutBookAction.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("The book first book was successfully checked out"));

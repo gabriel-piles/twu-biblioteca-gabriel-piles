@@ -72,7 +72,7 @@ public class BookDetailsTest {
 
         TestHelpers.userInput("first book");
 
-        bookDetails.execute(new BooksManager("test.txt"));
+        bookDetails.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
 

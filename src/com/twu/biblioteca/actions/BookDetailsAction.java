@@ -3,6 +3,7 @@ package com.twu.biblioteca.actions;
 import com.twu.biblioteca.BibliotecaUI;
 import com.twu.biblioteca.Book;
 import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.User;
 
 public class BookDetailsAction implements Action {
 
@@ -14,7 +15,7 @@ public class BookDetailsAction implements Action {
     }
 
     @Override
-    public void execute(BooksManager booksManager) {
+    public void execute(BooksManager booksManager, User user) {
         initializeBooksManager(booksManager);
         String userInput = BibliotecaUI.getUserInput("Enter the book name:");
         printBookDetails(userInput);

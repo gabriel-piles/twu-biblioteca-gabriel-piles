@@ -24,7 +24,7 @@ public class ListAvailableBooksActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         ListAvailableBooksAction listAvailableBooks = new ListAvailableBooksAction();
 
-        listAvailableBooks.execute(new BooksManager("test.txt"));
+        listAvailableBooks.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("List of available books:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("first book"));

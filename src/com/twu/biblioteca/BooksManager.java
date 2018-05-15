@@ -52,15 +52,6 @@ public class BooksManager {
         return booksSatisfyCondition;
     }
 
-    public boolean setAvailabilityToBook(String bookName, boolean availability) {
-
-        if(!existBook(bookName))
-        {
-            return false;
-        }
-
-        return this.allBooks.get(bookName).setAvailability(availability);
-    }
 
     public Boolean existBook(String bookName){
         if(!this.allBooks.containsKey(bookName))
@@ -89,12 +80,22 @@ public class BooksManager {
         return getBooksThatSatisfyCondition(false);
     }
 
-    public boolean checkOutBook(String bookName) {
+    public boolean checkOutBook(String bookName, User checkOutUser) {
 
-        return setAvailabilityToBook(bookName, false);
+        if (!existBook(bookName)) {
+            return false;
+        }
+
+        this.allBooks.get(bookName).checkOut(checkOutUser);
+        return true;
     }
 
     public boolean returnBook(String bookName) {
-        return setAvailabilityToBook(bookName, true);
+        if (!existBook(bookName)) {
+            return false;
+        }
+
+        this.allBooks.get(bookName).returnBook();
+        return true;
     }
 }

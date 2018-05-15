@@ -18,4 +18,8 @@ public class TestHelpers {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
     }
+
+    public static User getUserTest(){
+        return new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
+    }
 }

@@ -7,6 +7,8 @@ public class Book {
     private int year;
     private boolean available;
 
+    private User checkOutUser;
+
 
     public String getName() {
         return name;
@@ -24,16 +26,18 @@ public class Book {
         return available;
     }
 
-    public boolean setAvailability(boolean availabilityToSet) {
+    public void checkOut(User checkOutUser) {
+        this.available = false;
+        this.checkOutUser = checkOutUser;
+    }
 
-        if (available == availabilityToSet)
-        {
-            return false;
-        }
+    public void returnBook(){
+        this.available = true;
+        this.checkOutUser = null;
+    }
 
-        this.available = availabilityToSet;
-
-        return true;
+    public User getCheckOutUser(){
+        return this.checkOutUser;
     }
 
     public Book(String name, String author, int year, boolean available) {

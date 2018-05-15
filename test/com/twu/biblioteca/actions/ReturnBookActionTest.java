@@ -64,7 +64,7 @@ public class ReturnBookActionTest {
 
         TestHelpers.userInput("second book");
 
-        returnBookAction.execute(new BooksManager("test.txt"));
+        returnBookAction.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("The book second book was successfully returned"));

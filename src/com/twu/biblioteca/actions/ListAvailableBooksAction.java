@@ -3,6 +3,7 @@ package com.twu.biblioteca.actions;
 import com.twu.biblioteca.BibliotecaUI;
 import com.twu.biblioteca.Book;
 import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.User;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ListAvailableBooksAction implements Action {
     }
 
     @Override
-    public void execute(BooksManager booksManager) {
+    public void execute(BooksManager booksManager, User user) {
         initializeBooksManager(booksManager);
         printAvailableBooks();
     }

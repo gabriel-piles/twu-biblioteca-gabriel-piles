@@ -104,17 +104,18 @@ public class BooksManagerTest {
     public void checkOutBookFail() {
 
         BooksManager bookManager = initializeBookManagerForTesting();
-
-        assertEquals(false, bookManager.checkOutBook(""));
-        assertEquals(false, bookManager.checkOutBook("second book"));
+        User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
+        assertEquals(false, bookManager.checkOutBook("", newUser));
+        assertEquals(false, bookManager.checkOutBook("second book", newUser));
     }
 
     @Test
     public void checkOutBook() {
 
         BooksManager bookManager = initializeBookManagerForTesting();
+        User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
 
-        assertEquals(true, bookManager.checkOutBook("first book"));
+        assertEquals(true, bookManager.checkOutBook("first book", newUser));
         List<Book> listAvailableBooks = bookManager.listAvailableBooks();
 
         assertEquals(0, listAvailableBooks.size());
@@ -130,13 +131,10 @@ public class BooksManagerTest {
     }
 
     @Test
-    public void returnBookBook() {
-
+    public void returnBook() {
         BooksManager bookManager = initializeBookManagerForTesting();
-
         assertEquals(true, bookManager.returnBook("second book"));
         List<Book> listAvailableBooks = bookManager.listAvailableBooks();
-
         assertEquals(2, listAvailableBooks.size());
     }
 
