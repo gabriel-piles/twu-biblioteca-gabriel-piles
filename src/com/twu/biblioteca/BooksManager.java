@@ -86,12 +86,22 @@ public class BooksManager {
             return false;
         }
 
+        if(!this.allBooks.get(bookName).isAvailable())
+        {
+            return false;
+        }
+
         this.allBooks.get(bookName).checkOut(checkOutUser);
         return true;
     }
 
     public boolean returnBook(String bookName) {
         if (!existBook(bookName)) {
+            return false;
+        }
+
+        if(this.allBooks.get(bookName).isAvailable())
+        {
             return false;
         }
 

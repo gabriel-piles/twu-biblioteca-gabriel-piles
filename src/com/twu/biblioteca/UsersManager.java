@@ -43,4 +43,16 @@ public class UsersManager {
 
         return usersList;
     }
+
+    public boolean existUser(String userName) {
+        return this.allUsers.containsKey(userName);
+    }
+
+    public User getUser(String userName) {
+        if(!existUser(userName)){
+            return null;
+        }
+
+        return this.allUsers.get(userName);
+    }
 }

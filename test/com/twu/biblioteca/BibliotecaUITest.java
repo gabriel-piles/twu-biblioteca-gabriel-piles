@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class BibliotecaUITest {
 
@@ -53,12 +54,25 @@ public class BibliotecaUITest {
     public void userInputReturnBookCorrect() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         BooksManager booksManager = new BooksManager("test.txt");
+        UsersManager userManager = new UsersManager("users.txt");
 
-        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager);
+        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager, userManager);
 
         TestHelpers.userInput("5");
         bibliotecaUI.initializeUI();
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("1 List Books"));
+    }
+
+    @Test
+    public void signIn() {
+        BooksManager booksManager = new BooksManager("test.txt");
+        UsersManager userManager = new UsersManager("users.txt");
+
+        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager, userManager);
+
+        assertTrue(!bibliotecaUI.signIn("aa", "0"));
+        assertTrue(!bibliotecaUI.signIn("000-001", "0"));
+        assertTrue(bibliotecaUI.signIn("000-001", "1"));
     }
 }

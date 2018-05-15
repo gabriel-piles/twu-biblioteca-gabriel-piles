@@ -39,6 +39,6 @@ public class User {
     }
 
     public boolean checkPassword(String possiblePassword){
-        return possiblePassword == this.password;
+        return possiblePassword.equals(this.password);
     }
 }

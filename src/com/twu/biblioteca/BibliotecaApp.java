@@ -9,7 +9,9 @@ public class BibliotecaApp {
     public static void main(String[] args) {
 
         BooksManager booksManager = new BooksManager("test.txt");
-        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager);
+        UsersManager userManager = new UsersManager("users.txt");
+
+        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager, userManager);
 
         bibliotecaUI.initializeUI();
     }

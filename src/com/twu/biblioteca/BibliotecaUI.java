@@ -10,12 +10,14 @@ public class BibliotecaUI {
 
     private BooksManager booksManager;
     private Map<String, Action> menu;
-    private
+    private UsersManager usersManager;
+    private User authenticatedUser;
 
-    public BibliotecaUI(BooksManager booksManager) {
+    public BibliotecaUI(BooksManager booksManager, UsersManager usersManager) {
         printWelcomeMessage();
         this.booksManager = booksManager;
         this.menu = Menu.getMenu();
+        this.usersManager = usersManager;
     }
 
     public void initializeUI() {
@@ -31,7 +33,7 @@ public class BibliotecaUI {
                 continue;
             }
 
-            this.menu.get(optionSelected).execute(this.booksManager);
+            this.menu.get(optionSelected).execute(this.booksManager, null);
 
             if(this.menu.get(optionSelected).getName() == "Quit")
             {
@@ -62,5 +64,23 @@ public class BibliotecaUI {
     public static void informAboutTheBookNonEsxistence(String bookName){
         System.out.println("\nThe book " + bookName + " does not exist in the library\n");
 
+    }
+
+    public boolean signIn(String userName, String password){
+
+        if(!this.usersManager.existUser(userName)){
+            return false;
+        }
+
+        boolean authenticated = false;
+
+        User objectiveUser = this.usersManager.getUser(userName);
+
+        if(objectiveUser.checkPassword(password)){
+            this.authenticatedUser = objectiveUser;
+            authenticated = true;
+        }
+
+        return authenticated;
     }
 }
