@@ -33,7 +33,7 @@ public class ListAvailableBooksAction implements Action {
 
         for(Item eachItem: booksList)
         {
-            System.out.println(eachItem.getId() + "- " + eachItem.getName());
+            System.out.println(eachItem.getId() + " - " + eachItem.getName());
         }
 
         System.out.println();

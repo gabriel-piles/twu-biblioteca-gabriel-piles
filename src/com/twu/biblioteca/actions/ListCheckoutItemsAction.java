@@ -21,10 +21,6 @@ public class ListCheckoutItemsAction implements Action {
         printCheckoutItems();
     }
 
-    public void initializeBooksManager(ItemsManager itemsManager) {
-
-    }
-
     public void printCheckoutItems() {
 
         List<Item> itemsList = this.itemsManager.getItemsConditions(false, "all");
@@ -33,7 +29,7 @@ public class ListCheckoutItemsAction implements Action {
 
         for(Item eachItem: itemsList)
         {
-            System.out.println(eachItem.getId() + "- " + eachItem.getName());
+            System.out.println(eachItem.getId() + " - " + eachItem.getName());
         }
 
         System.out.println();
