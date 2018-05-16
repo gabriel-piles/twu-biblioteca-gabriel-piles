@@ -6,30 +6,30 @@ import com.twu.biblioteca.items.Item;
 
 import java.util.List;
 
-public class ListAvailableBooksAction implements Action {
+public class ListAvailableMoviesAction implements Action {
 
     private ItemsManager itemsManager;
 
     @Override
     public String getName() {
-        return "List Books";
+        return "List Movies";
     }
 
     @Override
     public void execute(ItemsManager itemsManager, User user) {
         initializeBooksManager(itemsManager);
-        printAvailableBooks();
+        printAvailableMovies();
     }
 
     public void initializeBooksManager(ItemsManager itemsManager) {
         this.itemsManager = itemsManager;
     }
 
-    public void printAvailableBooks() {
+    public void printAvailableMovies() {
 
-        List<Item> booksList = this.itemsManager.getItemsConditions(true, "book");
+        List<Item> booksList = this.itemsManager.getItemsConditions(true, "movie");
 
-        System.out.println("\nList of available books:\n");
+        System.out.println("\nList of available movies:\n");
 
         for(Item eachItem: booksList)
         {

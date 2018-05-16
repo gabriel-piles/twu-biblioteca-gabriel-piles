@@ -12,21 +12,21 @@ public class ItemDetailsAction implements Action {
 
     @Override
     public String getName() {
-        return "Book Details";
+        return "Item Details";
     }
 
     @Override
     public void execute(ItemsManager itemsManager, User user) {
-        initializeBooksManager(itemsManager);
+        initializeItemsManager(itemsManager);
         String userInput = BibliotecaUI.getUserInput("Enter the book name:");
-        printBookDetails(userInput);
+        printItemDetails(userInput, user);
     }
 
-    public void initializeBooksManager(ItemsManager itemsManager) {
+    public void initializeItemsManager(ItemsManager itemsManager) {
         this.itemsManager = itemsManager;
     }
 
-    public void printBookDetails(String bookName) {
+    public void printItemDetails(String bookName, User user) {
 
         if(!this.itemsManager.existItem(bookName))
         {
@@ -36,6 +36,6 @@ public class ItemDetailsAction implements Action {
 
         Item objectiveBook = this.itemsManager.getItem(bookName);
 
-        objectiveBook.printDetails();
+        objectiveBook.printDetails(user);
     }
 }

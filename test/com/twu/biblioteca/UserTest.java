@@ -37,4 +37,21 @@ public class UserTest {
         User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
         assertTrue(!newUser.checkPassword("a"));
     }
+
+    @Test
+    public void isAdmin() {
+        User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
+        assertTrue(!newUser.isAdmin());
+
+        newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",true);
+        assertTrue(newUser.isAdmin());
+    }
+
+    public static User getUserTest(){
+        return new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
+    }
+
+    public static User getAdminUserTest() {
+        return new User("111-111","Gabriel Piles","me@me.com","651...","v",true);
+    }
 }

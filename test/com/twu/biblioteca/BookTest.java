@@ -43,7 +43,7 @@ public class BookTest {
     public void printBookDetails() {
         OutputStream outputStream =TestHelpers.prepareRedirectOutputForTests();
         Book book = new Book("first", "first", "me",2000, false);
-        book.printDetails();
+        book.printDetails(UserTest.getUserTest());
         assertThat(outputStream.toString(), CoreMatchers.containsString("first"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("2000"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("me"));

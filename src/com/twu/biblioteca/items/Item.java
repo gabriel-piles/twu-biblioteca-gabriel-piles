@@ -37,7 +37,7 @@ public abstract class Item {
         return this.checkOutUser;
     }
 
-    public void printDetails() {
+    public void printDetails(User signInUser) {
     }
 
     protected void printAvailability(){
@@ -47,6 +47,16 @@ public abstract class Item {
         }
         else {
             System.out.println("Available: no");
+        }
+    }
+
+    protected void printUser(User signInUser){
+        if(signInUser.isAdmin())
+        {
+            if(!this.available && this.checkOutUser != null){
+                System.out.println("Checkout user:");
+                this.checkOutUser.printUserDetails();
+            }
         }
     }
 }

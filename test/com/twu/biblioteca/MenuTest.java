@@ -13,17 +13,19 @@ import static org.junit.Assert.assertNotEquals;
 
 public class MenuTest {
 
+
     @Test
-    public void getOptions() {
+    public void getMenu() {
         Map<String, Action> menu = Menu.getMenu();
 
-        assertNotEquals(null, menu);
-
         assertEquals("List Books", menu.get("1").getName());
-        assertEquals("Book Details", menu.get("2").getName());
-        assertEquals("Checkout Book", menu.get("3").getName());
-        assertEquals("Return Book", menu.get("4").getName());
-        assertEquals("Quit", menu.get("5").getName());
+        assertEquals("List Movies", menu.get("2").getName());
+        assertEquals("List Checkout Items", menu.get("3").getName());
+        assertEquals("Item Details", menu.get("4").getName());
+        assertEquals("Checkout Item", menu.get("5").getName());
+        assertEquals("Return Item", menu.get("6").getName());
+        assertEquals("User Details", menu.get("7").getName());
+        assertEquals("Quit", menu.get("8").getName());
     }
 
     @Test

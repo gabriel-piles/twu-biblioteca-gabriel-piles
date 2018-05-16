@@ -1,10 +1,13 @@
 package com.twu.biblioteca;
 
 
+import com.twu.biblioteca.actions.Action;
+import com.twu.biblioteca.items.Item;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import java.io.OutputStream;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -39,14 +42,10 @@ public class BibliotecaUITest {
 
     @Test
     public void printMenu() {
-        OutputStream outputStream =TestHelpers.prepareRedirectOutputForTests();
+        OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         BibliotecaUI.printMenu();
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("1 List Books"));
-        assertThat(outputStream.toString(), CoreMatchers.containsString("2 Book Details"));
-        assertThat(outputStream.toString(), CoreMatchers.containsString("3 Checkout Book"));
-        assertThat(outputStream.toString(), CoreMatchers.containsString("4 Return Book"));
-        assertThat(outputStream.toString(), CoreMatchers.containsString("5 Quit"));
     }
 
     @Test
@@ -57,7 +56,15 @@ public class BibliotecaUITest {
 
         BibliotecaUI bibliotecaUI = new BibliotecaUI(itemsManager, userManager);
 
-        TestHelpers.userInput("5");
+        String exitOption = null;
+        Map<String, Action> menu = Menu.getMenu();
+        for (String eachItem : menu.keySet()){
+            if(menu.get(eachItem).getName() == "Quit"){
+                exitOption = eachItem;
+            }
+        }
+
+        TestHelpers.userInput(exitOption);
         bibliotecaUI.initializeUI();
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("1 List Books"));

@@ -1,5 +1,6 @@
 package com.twu.biblioteca.items;
 
+import com.twu.biblioteca.User;
 import com.twu.biblioteca.items.Item;
 
 public class Book extends Item {
@@ -15,12 +16,13 @@ public class Book extends Item {
     }
 
     @Override
-    public void printDetails() {
+    public void printDetails(User signInUser) {
         System.out.println("\nName: " + this.name);
         System.out.println("Author: " + this.author);
         System.out.println("Year: " + this.year);
 
         printAvailability();
+        printUser(signInUser);
         System.out.println();
     }
 }

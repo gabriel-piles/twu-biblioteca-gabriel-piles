@@ -71,9 +71,9 @@ public class ItemsManagerTest {
     @Test
     public void listAvailableBooks() {
 
-        ItemsManager bookManager = initializeItemManagerForTesting();
+        ItemsManager itemsManager = initializeItemManagerForTesting();
 
-        List<Item> listAvailableBooks = bookManager.listAvailableBooks();
+        List<Item> listAvailableBooks = itemsManager.listAvailableBooks();
 
         assertEquals(1, listAvailableBooks.size());
 
@@ -85,20 +85,20 @@ public class ItemsManagerTest {
     @Test
     public void checkOutItemFail() {
 
-        ItemsManager bookManager = initializeItemManagerForTesting();
+        ItemsManager itemsManager = initializeItemManagerForTesting();
         User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
-        assertEquals(false, bookManager.checkOutItem("", newUser));
-        assertEquals(false, bookManager.checkOutItem("second book", newUser));
+        assertEquals(false, itemsManager.checkOutItem("", newUser));
+        assertEquals(false, itemsManager.checkOutItem("second book", newUser));
     }
 
     @Test
     public void checkOutItem() {
 
-        ItemsManager bookManager = initializeItemManagerForTesting();
+        ItemsManager itemsManager = initializeItemManagerForTesting();
         User newUser = new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
 
-        assertEquals(true, bookManager.checkOutItem("first book", newUser));
-        List<Item> listAvailableBooks = bookManager.listAvailableBooks();
+        assertEquals(true, itemsManager.checkOutItem("first book", newUser));
+        List<Item> listAvailableBooks = itemsManager.listAvailableBooks();
 
         assertEquals(0, listAvailableBooks.size());
     }
@@ -106,22 +106,22 @@ public class ItemsManagerTest {
     @Test
     public void returnItemFail() {
 
-        ItemsManager bookManager = initializeItemManagerForTesting();
+        ItemsManager itemsManager = initializeItemManagerForTesting();
 
-        assertEquals(false, bookManager.returnItem(""));
-        assertEquals(false, bookManager.returnItem("first book"));
+        assertEquals(false, itemsManager.returnItem(""));
+        assertEquals(false, itemsManager.returnItem("first book"));
     }
 
     @Test
     public void returnItem() {
-        ItemsManager bookManager = initializeItemManagerForTesting();
-        assertEquals(true, bookManager.returnItem("second book"));
-        List<Item> listAvailableBooks = bookManager.listAvailableBooks();
+        ItemsManager itemsManager = initializeItemManagerForTesting();
+        assertEquals(true, itemsManager.returnItem("second book"));
+        List<Item> listAvailableBooks = itemsManager.listAvailableBooks();
         assertEquals(2, listAvailableBooks.size());
     }
 
     public static ItemsManager initializeItemManagerForTesting() {
-        ItemsManager bookManager = new ItemsManager("books_test.txt", "movies_test.txt");
-        return  bookManager;
+        ItemsManager itemsManager = new ItemsManager("books_test.txt", "movies_test.txt");
+        return  itemsManager;
     }
 }

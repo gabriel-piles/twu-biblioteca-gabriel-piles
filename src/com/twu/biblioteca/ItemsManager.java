@@ -47,7 +47,7 @@ public class ItemsManager {
 
             if (itemClass.equals("movie"))
             {
-                newItem = createNewBook(fields);
+                newItem = createNewMovie(fields);
             }
             
             itemList.put(fields[0], newItem);
@@ -64,26 +64,36 @@ public class ItemsManager {
         return new Movie(fields[0], fields[1], fields[2], Integer.parseInt(fields[3]), Integer.parseInt(fields[4]),available);
     }
 
-    public List<Item> getBooksThatSatisfyCondition(boolean hasToBeAvailable) {
+    public List<Item> getItemsConditions(boolean hasToBeAvailable, String itemClass) {
         List<Item> booksSatisfyCondition = new ArrayList<>();
 
         for (Map.Entry<String, Item> eachItem : this.allItems.entrySet()) {
 
-            if (eachItem.getValue().isAvailable() == hasToBeAvailable) {
-                booksSatisfyCondition.add(eachItem.getValue());
+            if(itemClass.equals("movie") && eachItem.getValue() instanceof Book){
+                continue;
             }
+
+            if(itemClass.equals("book") && eachItem.getValue() instanceof Movie){
+                continue;
+            }
+
+            if (eachItem.getValue().isAvailable() != hasToBeAvailable) {
+                continue;
+            }
+
+            booksSatisfyCondition.add(eachItem.getValue());
+
         }
 
         return booksSatisfyCondition;
     }
 
-    public Boolean existItem(String bookName) {
-        if (!this.allItems.containsKey(bookName)) {
+    public Boolean existItem(String itemName) {
+        if (!this.allItems.containsKey(itemName)) {
             return false;
         }
 
         return true;
-
     }
 
     public Item getItem(String bookName) {
@@ -96,24 +106,20 @@ public class ItemsManager {
     }
 
     public List<Item> listAvailableBooks() {
-        return getBooksThatSatisfyCondition(true);
+        return getItemsConditions(true, "book");
     }
 
-    public List<Item> listCheckOutBooks() {
-        return getBooksThatSatisfyCondition(false);
-    }
+    public boolean checkOutItem(String itemName, User checkOutUser) {
 
-    public boolean checkOutItem(String bookName, User checkOutUser) {
-
-        if (!existItem(bookName)) {
+        if (!existItem(itemName)) {
             return false;
         }
 
-        if (!this.allItems.get(bookName).isAvailable()) {
+        if (!this.allItems.get(itemName).isAvailable()) {
             return false;
         }
 
-        this.allItems.get(bookName).checkOut(checkOutUser);
+        this.allItems.get(itemName).checkOut(checkOutUser);
         return true;
     }
 

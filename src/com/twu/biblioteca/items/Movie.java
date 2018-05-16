@@ -1,5 +1,6 @@
 package com.twu.biblioteca.items;
 
+import com.twu.biblioteca.User;
 import com.twu.biblioteca.items.Item;
 
 public class Movie extends Item {
@@ -17,13 +18,14 @@ public class Movie extends Item {
     }
     
     @Override
-    public void printDetails() {
+    public void printDetails(User signInUser) {
         System.out.println("\nName: " + this.name);
         System.out.println("Director: " + this.director);
         System.out.println("Year: " + this.year);
         System.out.println("Rating: " + this.rating);
 
         printAvailability();
+        printUser(signInUser);
         System.out.println();
     }
 }

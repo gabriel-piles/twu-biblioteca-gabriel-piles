@@ -6,13 +6,13 @@ import com.twu.biblioteca.ItemsManager;
 import com.twu.biblioteca.User;
 import com.twu.biblioteca.items.Item;
 
-public class ReturnBookAction implements Action {
+public class ReturnItemAction implements Action {
 
     private ItemsManager itemsManager;
 
     @Override
     public String getName() {
-        return "Return Book";
+        return "Return Item";
     }
 
     @Override
