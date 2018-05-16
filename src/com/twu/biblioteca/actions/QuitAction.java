@@ -1,6 +1,6 @@
 package com.twu.biblioteca.actions;
 
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.ItemsManager;
 import com.twu.biblioteca.User;
 
 public class QuitAction implements Action {
@@ -11,7 +11,7 @@ public class QuitAction implements Action {
     }
 
     @Override
-    public void execute(BooksManager booksManager, User user)
+    public void execute(ItemsManager itemsManager, User user)
     {
         System.out.println("\nGood Bye\n");
     }

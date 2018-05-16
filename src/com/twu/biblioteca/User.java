@@ -41,4 +41,8 @@ public class User {
     public boolean checkPassword(String possiblePassword){
         return possiblePassword.equals(this.password);
     }
+
+    public String getId() {
+        return this.id;
+    }
 }

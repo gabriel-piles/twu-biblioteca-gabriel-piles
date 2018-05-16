@@ -1,15 +1,15 @@
 package com.twu.biblioteca.actions;
 
-import com.twu.biblioteca.BibliotecaUI;
-import com.twu.biblioteca.Book;
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.items.Book;
+import com.twu.biblioteca.ItemsManager;
 import com.twu.biblioteca.User;
+import com.twu.biblioteca.items.Item;
 
 import java.util.List;
 
 public class ListAvailableBooksAction implements Action {
 
-    private BooksManager booksManager;
+    private ItemsManager itemsManager;
 
     @Override
     public String getName() {
@@ -17,24 +17,24 @@ public class ListAvailableBooksAction implements Action {
     }
 
     @Override
-    public void execute(BooksManager booksManager, User user) {
-        initializeBooksManager(booksManager);
+    public void execute(ItemsManager itemsManager, User user) {
+        initializeBooksManager(itemsManager);
         printAvailableBooks();
     }
 
-    public void initializeBooksManager(BooksManager booksManager) {
-        this.booksManager = booksManager;
+    public void initializeBooksManager(ItemsManager itemsManager) {
+        this.itemsManager = itemsManager;
     }
 
     public void printAvailableBooks() {
 
-        List<Book> booksList = this.booksManager.getBooksThatSatisfyCondition(true);
+        List<Item> booksList = this.itemsManager.getBooksThatSatisfyCondition(true);
 
         System.out.println("\nList of available books:\n");
 
-        for(Book eachBook: booksList)
+        for(Item eachItem: booksList)
         {
-            System.out.println("- " + eachBook.getName());
+            System.out.println(eachItem.getId() + "- " + eachItem.getName());
         }
 
         System.out.println();

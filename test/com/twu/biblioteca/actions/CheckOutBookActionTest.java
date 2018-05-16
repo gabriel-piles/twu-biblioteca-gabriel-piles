@@ -1,7 +1,8 @@
 package com.twu.biblioteca.actions;
 
 
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.ItemsManager;
+import com.twu.biblioteca.ItemsManagerTest;
 import com.twu.biblioteca.TestHelpers;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
@@ -20,15 +21,25 @@ public class CheckOutBookActionTest {
     }
 
     @Test
+    public void usersNull() {
+        ItemsManager bookManager = ItemsManagerTest.initializeItemManagerForTesting();
+        assertEquals(null, bookManager.getItem("first book").getCheckOutUser());
+        assertEquals(null, bookManager.getItem("second book").getCheckOutUser());
+    }
+
+    @Test
     public void checkOutBookCorrect() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         CheckOutBookAction checkOutBookAction = new CheckOutBookAction();
 
-        checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        ItemsManager bookManager = ItemsManagerTest.initializeItemManagerForTesting();
+
+        checkOutBookAction.initializeBooksManager(bookManager);
 
         checkOutBookAction.checkOutBook("first book", TestHelpers.getUserTest());
 
         assertEquals("The book first book was successfully checked out", outputStream.toString().trim());
+        assertEquals("000-001", bookManager.getItem("first book").getCheckOutUser().getId());
     }
 
     @Test
@@ -36,7 +47,7 @@ public class CheckOutBookActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         CheckOutBookAction checkOutBookAction = new CheckOutBookAction();
 
-        checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        checkOutBookAction.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         checkOutBookAction.checkOutBook("third book", TestHelpers.getUserTest());
 
@@ -49,7 +60,7 @@ public class CheckOutBookActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         CheckOutBookAction checkOutBookAction = new CheckOutBookAction();
 
-        checkOutBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        checkOutBookAction.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         checkOutBookAction.checkOutBook("second book", TestHelpers.getUserTest());
 
@@ -64,7 +75,7 @@ public class CheckOutBookActionTest {
 
         TestHelpers.userInput("first book");
 
-        checkOutBookAction.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
+        checkOutBookAction.execute(ItemsManagerTest.initializeItemManagerForTesting(), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("The book first book was successfully checked out"));

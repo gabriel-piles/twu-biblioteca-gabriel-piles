@@ -1,7 +1,8 @@
 package com.twu.biblioteca.actions;
 
 
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.ItemsManager;
+import com.twu.biblioteca.ItemsManagerTest;
 import com.twu.biblioteca.TestHelpers;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class ListAvailableBooksActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         ListAvailableBooksAction listAvailableBooks = new ListAvailableBooksAction();
 
-        listAvailableBooks.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
+        listAvailableBooks.execute(ItemsManagerTest.initializeItemManagerForTesting(), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("List of available books:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("first book"));

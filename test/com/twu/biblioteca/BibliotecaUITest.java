@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
 
-import com.twu.biblioteca.actions.ReturnBookAction;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -53,10 +52,10 @@ public class BibliotecaUITest {
     @Test
     public void userInputReturnBookCorrect() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
-        BooksManager booksManager = new BooksManager("test.txt");
+        ItemsManager itemsManager = ItemsManagerTest.initializeItemManagerForTesting();
         UsersManager userManager = new UsersManager("users.txt");
 
-        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager, userManager);
+        BibliotecaUI bibliotecaUI = new BibliotecaUI(itemsManager, userManager);
 
         TestHelpers.userInput("5");
         bibliotecaUI.initializeUI();
@@ -66,13 +65,13 @@ public class BibliotecaUITest {
 
     @Test
     public void signIn() {
-        BooksManager booksManager = new BooksManager("test.txt");
+        ItemsManager itemsManager = ItemsManagerTest.initializeItemManagerForTesting();
         UsersManager userManager = new UsersManager("users.txt");
 
-        BibliotecaUI bibliotecaUI = new BibliotecaUI(booksManager, userManager);
+        BibliotecaUI bibliotecaUI = new BibliotecaUI(itemsManager, userManager);
 
-        assertTrue(!bibliotecaUI.signIn("aa", "0"));
-        assertTrue(!bibliotecaUI.signIn("000-001", "0"));
-        assertTrue(bibliotecaUI.signIn("000-001", "1"));
+        assertTrue(!bibliotecaUI.isUserValid("aa", "0"));
+        assertTrue(!bibliotecaUI.isUserValid("000-001", "0"));
+        assertTrue(bibliotecaUI.isUserValid("000-001", "1"));
     }
 }

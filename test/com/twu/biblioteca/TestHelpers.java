@@ -20,6 +20,6 @@ public class TestHelpers {
     }
 
     public static User getUserTest(){
-        return new User("111-111","Gabriel Piles","me@me.com","651...","v",false);
+        return new User("000-001","Gabriel Piles","me@me.com","651...","v",false);
     }
 }

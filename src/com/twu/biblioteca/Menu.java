@@ -3,7 +3,6 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.actions.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Menu {
@@ -15,7 +14,7 @@ public class Menu {
         actionsMap = new HashMap();
 
         actionsMap.put("1", new ListAvailableBooksAction());
-        actionsMap.put("2", new BookDetailsAction());
+        actionsMap.put("2", new ItemDetailsAction());
         actionsMap.put("3", new CheckOutBookAction());
         actionsMap.put("4", new ReturnBookAction());
         actionsMap.put("5", new QuitAction());

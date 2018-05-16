@@ -1,7 +1,8 @@
 package com.twu.biblioteca.actions;
 
 
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.ItemsManager;
+import com.twu.biblioteca.ItemsManagerTest;
 import com.twu.biblioteca.TestHelpers;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
@@ -11,20 +12,20 @@ import java.io.OutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class BookDetailsTest {
+public class ItemDetailsTest {
 
     @Test
     public void getName() {
-        BookDetailsAction bookDetails = new BookDetailsAction();
+        ItemDetailsAction bookDetails = new ItemDetailsAction();
         assertEquals("Book Details", bookDetails.getName());
     }
 
     @Test
     public void printBookDetailsFirstBook() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
-        BookDetailsAction bookDetails = new BookDetailsAction();
+        ItemDetailsAction bookDetails = new ItemDetailsAction();
 
-        bookDetails.initializeBooksManager(new BooksManager("test.txt"));
+        bookDetails.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         bookDetails.printBookDetails("first book");
 
@@ -37,9 +38,9 @@ public class BookDetailsTest {
     @Test
     public void printBookDetailsSecondBook() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
-        BookDetailsAction bookDetails = new BookDetailsAction();
+        ItemDetailsAction bookDetails = new ItemDetailsAction();
 
-        bookDetails.initializeBooksManager(new BooksManager("test.txt"));
+        bookDetails.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         bookDetails.printBookDetails("second book");
 
@@ -53,9 +54,9 @@ public class BookDetailsTest {
     @Test
     public void printBookDetailsNonExistentBook() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
-        BookDetailsAction bookDetails = new BookDetailsAction();
+        ItemDetailsAction bookDetails = new ItemDetailsAction();
 
-        bookDetails.initializeBooksManager(new BooksManager("test.txt"));
+        bookDetails.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         bookDetails.printBookDetails("third book");
 
@@ -66,13 +67,13 @@ public class BookDetailsTest {
     @Test
     public void userInputReturnBookCorrect() {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
-        BookDetailsAction bookDetails = new BookDetailsAction();
+        ItemDetailsAction bookDetails = new ItemDetailsAction();
 
-        bookDetails.initializeBooksManager(new BooksManager("test.txt"));
+        bookDetails.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         TestHelpers.userInput("first book");
 
-        bookDetails.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
+        bookDetails.execute(ItemsManagerTest.initializeItemManagerForTesting(), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
 

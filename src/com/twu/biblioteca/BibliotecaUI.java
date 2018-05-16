@@ -1,26 +1,25 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.actions.CheckOutBookAction;
 import com.twu.biblioteca.actions.Action;
-import com.twu.biblioteca.actions.ListAvailableBooksAction;
 
 import java.util.*;
 
 public class BibliotecaUI {
 
-    private BooksManager booksManager;
+    private ItemsManager itemsManager;
     private Map<String, Action> menu;
     private UsersManager usersManager;
     private User authenticatedUser;
 
-    public BibliotecaUI(BooksManager booksManager, UsersManager usersManager) {
-        printWelcomeMessage();
-        this.booksManager = booksManager;
+    public BibliotecaUI(ItemsManager itemsManager, UsersManager usersManager) {
+
+        this.itemsManager = itemsManager;
         this.menu = Menu.getMenu();
         this.usersManager = usersManager;
     }
 
     public void initializeUI() {
+        printWelcomeMessage();
         boolean continueProgram = true;
 
         while (continueProgram)
@@ -33,7 +32,7 @@ public class BibliotecaUI {
                 continue;
             }
 
-            this.menu.get(optionSelected).execute(this.booksManager, null);
+            this.menu.get(optionSelected).execute(this.itemsManager, this.authenticatedUser);
 
             if(this.menu.get(optionSelected).getName() == "Quit")
             {
@@ -58,7 +57,7 @@ public class BibliotecaUI {
     }
 
     public static void printWelcomeMessage() {
-        System.out.println("\nWelcome to the Bangalore Public Library\n");
+        System.out.println("\n\nWelcome to the Bangalore Public Library\n");
     }
 
     public static void informAboutTheBookNonEsxistence(String bookName){
@@ -66,7 +65,7 @@ public class BibliotecaUI {
 
     }
 
-    public boolean signIn(String userName, String password){
+    public boolean isUserValid(String userName, String password){
 
         if(!this.usersManager.existUser(userName)){
             return false;
@@ -82,5 +81,18 @@ public class BibliotecaUI {
         }
 
         return authenticated;
+    }
+
+    public void signInProcess(){
+
+        String userName = getUserInput("User name:");
+        String password = getUserInput("Password:");
+
+        if(isUserValid(userName,password )){
+            initializeUI();
+        }
+        else {
+            System.out.println("\nUser not valid");
+        }
     }
 }

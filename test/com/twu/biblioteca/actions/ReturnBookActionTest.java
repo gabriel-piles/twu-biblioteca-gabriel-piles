@@ -1,13 +1,12 @@
 package com.twu.biblioteca.actions;
 
 
-import com.twu.biblioteca.BooksManager;
+import com.twu.biblioteca.ItemsManager;
+import com.twu.biblioteca.ItemsManagerTest;
 import com.twu.biblioteca.TestHelpers;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +25,7 @@ public class ReturnBookActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         ReturnBookAction returnBookAction = new ReturnBookAction();
 
-        returnBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        returnBookAction.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         returnBookAction.returnBook("second book");
 
@@ -38,7 +37,7 @@ public class ReturnBookActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         ReturnBookAction returnBookAction = new ReturnBookAction();
 
-        returnBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        returnBookAction.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         returnBookAction.returnBook("first book");
 
@@ -50,7 +49,7 @@ public class ReturnBookActionTest {
         OutputStream outputStream = TestHelpers.prepareRedirectOutputForTests();
         ReturnBookAction returnBookAction = new ReturnBookAction();
 
-        returnBookAction.initializeBooksManager(new BooksManager("test.txt"));
+        returnBookAction.initializeBooksManager(ItemsManagerTest.initializeItemManagerForTesting());
 
         returnBookAction.returnBook("third book");
 
@@ -64,7 +63,7 @@ public class ReturnBookActionTest {
 
         TestHelpers.userInput("second book");
 
-        returnBookAction.execute(new BooksManager("test.txt"), TestHelpers.getUserTest());
+        returnBookAction.execute(ItemsManagerTest.initializeItemManagerForTesting(), TestHelpers.getUserTest());
 
         assertThat(outputStream.toString(), CoreMatchers.containsString("Enter the book name:"));
         assertThat(outputStream.toString(), CoreMatchers.containsString("The book second book was successfully returned"));
